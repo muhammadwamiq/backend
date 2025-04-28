@@ -26,6 +26,10 @@ jobs:
             echo "Connecting to EC2!"
             echo "Updating EC2 server"
             sudo apt update -y
+            echo "installing nginx"
+            sudo apt install nginx -y
+            echo "starting nginx"
+            sudo systemctl start nginx
             echo "Removing backend folder if it exist earlier"
             sudo rm -rf backend
             echo "Cloning to GITHUB"

@@ -34,6 +34,7 @@ jobs:
             cd backend
             echo "installing dependencies" 
             sudo npm install
+            sudo npm install -g pm2
             echo "starting node app in background"
             pm2 start app.js -f --name "backend"
             echo "saving pm2"

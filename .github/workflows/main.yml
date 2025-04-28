@@ -43,7 +43,7 @@ jobs:
             echo "installing pm2"
             sudo npm install -g pm2
             echo "starting node app in background"
-            pm2 start app.js --name "backend"
+            pm2 start app.js -f --name "backend"
             echo "saving pm2"
             pm2 save
             echo "testing nginx"

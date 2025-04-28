@@ -49,4 +49,4 @@ jobs:
             echo "testing nginx"
             sudo nginx -t 
             echo "nginx reloadeding"
-            sudo systemctl reload nginx 
+            sudo systemctl reload nginx

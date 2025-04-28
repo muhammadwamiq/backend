@@ -5,12 +5,9 @@ on:
   pull_request:
     branches:
       - master
-
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: SSH to EC2 and run commands
         uses: appleboy/ssh-action@v1.0.3
@@ -37,13 +34,9 @@ jobs:
             cd backend
             echo "installing dependencies" 
             sudo npm install
-            echo "installing pm2"
-            sudo npm install -g pm2
             echo "starting node app in background"
             pm2 start app.js -f --name "backend"
             echo "saving pm2"
             pm2 save
-            echo "testing nginx"
-            sudo nginx -t 
             echo "nginx reloadeding"
             sudo systemctl reload nginx

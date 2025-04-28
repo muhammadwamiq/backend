@@ -14,6 +14,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # or your preferred version
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
+
+      - name: Copy build folder to EC2 via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          source: "build/*"
+          target: "/home/ubuntu/build-temp"
 
       - name: SSH to EC2 and run commands
         uses: appleboy/ssh-action@v1.0.3
@@ -36,6 +55,8 @@ jobs:
             git clone https://github.com/muhammadwamiq/backend.git
             echo "listing files of current directiory"
             ls
+            sudo rm -rf /var/www/html/frontend/*
+            sudo mv /home/ubuntu/build-temp/* /var/www/html/frontend/
             echo "Moved inside project folder"
             cd backend
             echo "installing dependencies" 
